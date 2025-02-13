@@ -309,7 +309,7 @@ jobs:
 
   download-fiddler-everywhere-mac:
     if: ${{ github.event.inputs.os-and-arch == 'Mac (x86_64)' || github.event.inputs.os-and-arch == 'Mac (arm64)' || github.event.inputs.os-and-arch == 'Mac (arm64e)' }}
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: 
       - scrape_fe_version
 
@@ -326,15 +326,15 @@ jobs:
           if (-not [string]::IsNullOrEmpty($scrapedVersion)) {
             $downloadUrl = "null"
 
-            if ($env:ARCH_CODE -eq "x86_64") {
-              $downloadUrl = "https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20$scrapedVersion.dmg"
-            } elseif ($env:ARCH_CODE -eq "arm64") {
+            #if ($env:ARCH_CODE -eq "x86_64") {
+             # $downloadUrl = "https://downloads.getfiddler.com/mac/Fiddler%20Everywhere%20$scrapedVersion.dmg"
+            #} elseif ($env:ARCH_CODE -eq "arm64") {
               $downloadUrl = "https://downloads.getfiddler.com/mac-arm64/Fiddler%20Everywhere%20$scrapedVersion.dmg"
-            } elseif ($env:ARCH_CODE -eq "arm64e") {
-              //Don't know
-            } else {
-              throw "Unsupported OS architecture: $env:ARCH_CODE"
-            }
+            #} elseif ($env:ARCH_CODE -eq "arm64e") {
+             # //Don't know
+            #} else {
+             # throw "Unsupported OS architecture: $env:ARCH_CODE"
+            #}
           
             Write-Host "Download URL: $downloadUrl"
 
