@@ -349,7 +349,7 @@ jobs:
       - name: Extract AppImage
         run: |
           echo "yes" | hdiutil attach FiddlerEverywhere.dmg 
-          cp -R /Volumes/Fiddler%20Everywhere%20$scrapedVersion.dmg/* ./fe_app/
+          cp -R /Volumes/Fiddler%20Everywhere%20$scrapedVersion-$env:ARCH_CODE/* ./fe_app/
           
       - name: List fe_app
         shell: pwsh
