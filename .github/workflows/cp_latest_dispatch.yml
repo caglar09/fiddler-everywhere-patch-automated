@@ -350,9 +350,7 @@ jobs:
         run: |
           hdiutil attach -nobrowse -quiet FiddlerEverywhere.dmg
           cp -R /Volumes/FiddlerEverywhere/* ./fe_app/
-          hdiutil detach /Volumes/FiddlerEverywhere
-
-
+          
       - name: List fe_app
         shell: pwsh
         run: Get-ChildItem -Recurse
