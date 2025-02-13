@@ -353,9 +353,19 @@ jobs:
         run: |
           echo "yes" | hdiutil attach FiddlerEverywhere.dmg 
           mkdir -p fe_app
-          MOUNT_POINT=$(hdiutil info | grep "Fiddler Everywhere" | awk '{print $NF}')
+      
+          # Doğru mount edilen yolu bul
+          MOUNT_POINT=$(hdiutil info | grep "Fiddler Everywhere" | awk -F '\t' '{print $NF}')
+          
+          if [ -z "$MOUNT_POINT" ]; then
+            echo "Failed to find the mount point."
+            exit 1
+          fi
+      
           echo "Mounted at: $MOUNT_POINT"
+      
           cp -R "$MOUNT_POINT"/* ./fe_app/
+
 
           
       - name: List fe_app
