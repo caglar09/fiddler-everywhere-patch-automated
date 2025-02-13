@@ -371,60 +371,75 @@ jobs:
       - name: List fe_app
         shell: pwsh
         run: Get-ChildItem -Recurse
-        
+
+      - name: Compress fe_app Folder
+        run: tar -cvf fe_app.tar fe_app/
+      
       - name: Upload Fiddler Everywhere Extracted folder as an artifact
-        env: 
-           NODE_OPTIONS: "--max-old-space-size=4096"
         uses: actions/upload-artifact@v4
         with:
-           name: fe_app
-           path: fe_app/
-           if-no-files-found: error
-           compression-level: 6
+          name: fe_app
+          path: fe_app.tar
+          if-no-files-found: error
+          
+      #- name: Upload Fiddler Everywhere Extracted folder as an artifact
+       # env: 
+        #   NODE_OPTIONS: "--max-old-space-size=4096"
+       # uses: actions/upload-artifact@v4
+        #with:
+         #  name: fe_app
+          # path: fe_app/
+           #if-no-files-found: error
+           #compression-level: 6
 
 
   patch_fe:
     runs-on: windows-latest
-
+  
     needs:
       - download-Yui-patch
       - download-msojocs-server
       - scrape_fe_version
-
+  
     if: ${{ needs.download-fiddler-everywhere-windows.result == 'success' || needs.download-fiddler-everywhere-linux.result == 'success' || needs.download-fiddler-everywhere-mac.result == 'success' }}
-
+  
     env:
       SCRAPED_VERSION: ${{ needs.scrape_fe_version.outputs.scraped_version }}
-
+  
     outputs:
       patched-fe-name: ${{ steps.rename-fe.outputs.patched-fe-name }}
-      
+  
     steps:
       - name: Download Yukuhana-Patch
         uses: actions/download-artifact@v4
         with:
           name: Yui-patch
           path: Yui-patch
-
+  
       - name: Download msojocs-Server
         uses: actions/download-artifact@v4
         with:
           name: msojocs-patch
           path: msojocs-patch
-
-      - name: Download FE
+  
+      - name: Download FE (tar version)
         uses: actions/download-artifact@v4
         with:
           name: fe_app
-          path: fe_app
-
+          path: fe_app.tar
+  
+      - name: Extract FE tarball
+        run: |
+          tar -xvf fe_app.tar
+        shell: pwsh
+  
       - name: List the contents of the downloaded artifacts
         run: |
           Get-ChildItem -Recurse Yui-patch
           Get-ChildItem -Recurse msojocs-patch
           Get-ChildItem -Recurse fe_app
         shell: pwsh
-
+  
       - name: Rename main FE folder
         run: Rename-Item -Path "fe_app" -NewName "FE"
 
