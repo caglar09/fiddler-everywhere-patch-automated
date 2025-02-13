@@ -373,11 +373,15 @@ jobs:
         run: Get-ChildItem -Recurse
         
       - name: Upload Fiddler Everywhere Extracted folder as an artifact
+        env: 
+           NODE_OPTIONS: "--max-old-space-size=4096"
         uses: actions/upload-artifact@v4
         with:
-          name: fe_app
-          path: fe_app/
-          if-no-files-found: error
+           name: fe_app
+           path: fe_app/
+           if-no-files-found: error
+           compression-level: 6
+
 
   patch_fe:
     runs-on: windows-latest
