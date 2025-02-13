@@ -345,12 +345,18 @@ jobs:
             exit 1
           }
         shell: pwsh
+      - name: Debug Mounted Volumes
+        run: |
+          mount
 
       - name: Extract AppImage
         run: |
           echo "yes" | hdiutil attach FiddlerEverywhere.dmg 
-          echo "/Volumes/Fiddler%20Everywhere%20$scrapedVersion-$env:ARCH_CODE/*"
-          cp -R /Volumes/Fiddler%20Everywhere%20$scrapedVersion-$env:ARCH_CODE/* ./fe_app/
+          mkdir -p fe_app
+          MOUNT_POINT=$(hdiutil info | grep "Fiddler Everywhere" | awk '{print $NF}')
+          echo "Mounted at: $MOUNT_POINT"
+          cp -R "$MOUNT_POINT"/* ./fe_app/
+
           
       - name: List fe_app
         shell: pwsh
