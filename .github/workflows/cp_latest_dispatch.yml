@@ -348,8 +348,9 @@ jobs:
 
       - name: Extract AppImage
         run: |
-          hdiutil attach -nobrowse -quiet FiddlerEverywhere.dmg
+          hdiutil attach FiddlerEverywhere.dmg -accept
           cp -R /Volumes/FiddlerEverywhere/* ./fe_app/
+          hdiutil detach /Volumes/FiddlerEverywhere
           
       - name: List fe_app
         shell: pwsh
