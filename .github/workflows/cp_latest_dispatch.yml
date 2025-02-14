@@ -430,7 +430,13 @@ jobs:
         with:
           name: fe_app
           path: fe_app.tar
-  
+          
+      - name: Debug Available Artifacts
+        run: ls -lah
+
+      - name: List All Available Artifacts
+        run: gh run list --json artifacts
+        
       - name: Extract FE tarball
         run: |
           tar -xvf fe_app.tar
