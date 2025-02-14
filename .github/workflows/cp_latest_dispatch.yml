@@ -430,6 +430,15 @@ jobs:
         with:
           name: fe_app
           path: fe_app.tar
+      - name: Debug Available Artifacts (Detailed with Size)
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Select-Object FullName, Length | Format-Table -AutoSize
+          
+      - name: Debug Available Artifacts (Full Path)
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Select-Object FullName | Format-Table -AutoSize
           
       - name: Debug Available Artifacts (Detailed)
         shell: pwsh
