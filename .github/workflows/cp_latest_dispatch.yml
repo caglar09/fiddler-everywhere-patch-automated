@@ -429,7 +429,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: fe_app
-          path: fe_app.tar
+          path: fe_app.zip
       - name: Debug Available Artifacts (Detailed with Size)
         shell: pwsh
         run: |
@@ -445,24 +445,25 @@ jobs:
         run: |
           Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSize
 
-      - name: Check fe_app.tar file size
+      - name: Check fe_app.zip file size
         shell: pwsh
         run: |
           $file = Get-Item "fe_app.tar"
           Write-Host "File Size: $($file.Length) bytes"
-      - name: Validate fe_app.tar
-        shell: pwsh
-        run: |
-          file fe_app.tar
           
-      - name: Extract fe_app.tar with 7-Zip
+      - name: Validate fe_app.zip
         shell: pwsh
         run: |
-          7z x fe_app.tar -ofe_app_extracted
+          file fe_app.zip
+          
+      - name: Extract fe_app.zip with 7-Zip
+        shell: pwsh
+        run: |
+          7z x fe_app.zip -ofe_app_extracted
           
       - name: Extract FE tarball
         run: |
-          tar -xvf fe_app.tar
+          tar -xvf fe_app.zip
         shell: pwsh
   
       - name: List the contents of the downloaded artifacts
