@@ -354,7 +354,6 @@ jobs:
           echo "yes" | hdiutil attach FiddlerEverywhere.dmg 
           mkdir -p fe_app
       
-          # Doğru mount edilen yolu bul
           MOUNT_POINT=$(hdiutil info | grep "Fiddler Everywhere" | awk -F '\t' '{print $NF}')
           
           if [ -z "$MOUNT_POINT" ]; then
@@ -364,22 +363,20 @@ jobs:
       
           echo "Mounted at: $MOUNT_POINT"
       
-          cp -R "$MOUNT_POINT"/* ./fe_app/
-
-
-          
+          cp -R "$MOUNT_POINT"/Fiddler\ Everywhere.app/* ./fe_app/
+      
       - name: List fe_app
         shell: pwsh
-        run: Get-ChildItem -Recurse
+        run: Get-ChildItem -Recurse fe_app
 
       - name: Compress fe_app Folder
-        run: tar -cvf fe_app.tar fe_app/
+        run: zip -r fe_app.zip fe_app/
       
       - name: Upload Fiddler Everywhere Extracted folder as an artifact
         uses: actions/upload-artifact@v4
         with:
           name: fe_app
-          path: fe_app.tar
+          path: fe_app.zip
           if-no-files-found: error
           
       #- name: Upload Fiddler Everywhere Extracted folder as an artifact
