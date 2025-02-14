@@ -448,7 +448,7 @@ jobs:
       - name: Check fe_app.zip file size
         shell: pwsh
         run: |
-          $file = Get-Item "fe_app.tar"
+          $file = Get-Item "fe_app.zip"
           Write-Host "File Size: $($file.Length) bytes"
           
       - name: Validate fe_app.zip
