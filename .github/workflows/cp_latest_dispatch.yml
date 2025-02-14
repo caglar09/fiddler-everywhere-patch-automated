@@ -443,7 +443,7 @@ jobs:
       - name: Debug Available Artifacts (Detailed)
         shell: pwsh
         run: |
-          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSizeh
+          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSize
 
       - name: List All Available Artifacts
         run: gh run list --json artifacts
