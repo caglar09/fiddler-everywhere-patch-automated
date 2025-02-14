@@ -376,7 +376,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fe_app
-          path: fe_app.zip
+          path: fe_app
           if-no-files-found: error
           
       #- name: Upload Fiddler Everywhere Extracted folder as an artifact
