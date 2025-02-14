@@ -431,8 +431,10 @@ jobs:
           name: fe_app
           path: fe_app.tar
           
-      - name: Debug Available Artifacts
-        run: ls -lah
+      - name: Debug Available Artifacts (Detailed)
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSizeh
 
       - name: List All Available Artifacts
         run: gh run list --json artifacts
