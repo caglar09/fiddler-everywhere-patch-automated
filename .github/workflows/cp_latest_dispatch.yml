@@ -444,9 +444,6 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSize
-
-      - name: List All Available Artifacts
-        run: gh run list --json artifacts
         
       - name: Extract FE tarball
         run: |
