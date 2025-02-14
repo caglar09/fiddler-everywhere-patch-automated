@@ -444,7 +444,22 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Path $env:GITHUB_WORKSPACE -Recurse | Format-Table -AutoSize
-        
+
+      - name: Check fe_app.tar file size
+        shell: pwsh
+        run: |
+          $file = Get-Item "fe_app.tar"
+          Write-Host "File Size: $($file.Length) bytes"
+      - name: Validate fe_app.tar
+        shell: pwsh
+        run: |
+          file fe_app.tar
+          
+      - name: Extract fe_app.tar with 7-Zip
+        shell: pwsh
+        run: |
+          7z x fe_app.tar -ofe_app_extracted
+          
       - name: Extract FE tarball
         run: |
           tar -xvf fe_app.tar
