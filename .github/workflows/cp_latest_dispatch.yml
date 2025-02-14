@@ -400,9 +400,7 @@ jobs:
       - download-Yui-patch
       - download-msojocs-server
       - scrape_fe_version
-  
-    if: ${{ needs.download-fiddler-everywhere-windows.result == 'success' || needs.download-fiddler-everywhere-linux.result == 'success' || needs.download-fiddler-everywhere-mac.result == 'success' }}
-  
+      - download-fiddler-everywhere-mac
     env:
       SCRAPED_VERSION: ${{ needs.scrape_fe_version.outputs.scraped_version }}
   
@@ -410,6 +408,11 @@ jobs:
       patched-fe-name: ${{ steps.rename-fe.outputs.patched-fe-name }}
   
     steps:
+      - name: Debug needs values
+        run: |
+          echo "download-fiddler-everywhere-mac.result = ${{ needs.download-fiddler-everywhere-mac.result }}"
+          echo "download-fiddler-everywhere-windows.result = ${{ needs.download-fiddler-everywhere-windows.result }}"
+          echo "download-fiddler-everywhere-linux.result = ${{ needs.download-fiddler-everywhere-linux.result }}"
       - name: Download Yukuhana-Patch
         uses: actions/download-artifact@v4
         with:
